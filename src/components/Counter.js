@@ -1,29 +1,42 @@
-const Counter = ({ onDelete, counter, onIncrement }) => {
+const Counter = (props) => {
   const getBadgeClasses = () => {
     let classes = " m-2 badge bg-";
-    classes += counter.value === 0 ? "warning" : "primary";
+    classes += props.counter.value === 0 ? "warning" : "primary";
     return classes;
   };
 
   const formatCount = () => {
-    return counter.value === 0 ? "Zero" : counter.value;
+    return props.counter.value === 0 ? "Zero" : props.counter.value;
   };
 
   return (
-    <div>
-      <span className={getBadgeClasses()}>{formatCount()}</span>
-      <button
-        onClick={() => onIncrement(counter)}
-        className="btn btn-secondary btn-sm"
-      >
-        Increment
-      </button>
-      <button
-        onClick={() => onDelete(counter.id)}
-        className="btn btn-danger btn-sm m-2"
-      >
-        Delete
-      </button>
+    <div className="row">
+      <div className="col-1">
+        <span className={getBadgeClasses()}>{formatCount()}</span>
+      </div>
+      <div className="col">
+        <button
+          onClick={() => props.onIncrement(props.counter)}
+          className="btn btn-secondary btn-sm "
+        >
+          +
+        </button>
+
+        <button
+          onClick={() => props.onDecrement(props.counter)}
+          className="btn btn-secondary btn-sm m-2"
+          disabled={props.counter.value === 0 ? "disabled" : ""}
+        >
+          -
+        </button>
+
+        <button
+          onClick={() => props.onDelete(props.counter.id)}
+          className="btn btn-danger btn-sm "
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };
